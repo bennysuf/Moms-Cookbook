@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   resources :categories, only: [:index]
   resources :recipes, only: [:create, :update, :destroy, :index]
   resources :users, only: [:create, :show]
-  post "/login", to: "session#create"
-  delete "/logout", to: "session#destroy"
+  post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
