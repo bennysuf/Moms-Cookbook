@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const history = useHistory()
 
   function handleUsername(e) {
     e.preventDefault();
@@ -32,7 +34,13 @@ export default function Login() {
       }),
     })
       .then((r) => r.json())
-      .then((d) => console.log(d));
+      .then((d) => {
+        console.log(d)
+        setPassword("")
+      setUsername("")
+      setPasswordConfirm("")
+      history.push("/home")
+      })
   }
 
   return (
