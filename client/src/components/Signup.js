@@ -5,8 +5,9 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [errors, setErrors] = useState([]);
 
-  const history = useHistory()
+  const history = useHistory();
 
   function handleUsername(e) {
     e.preventDefault();
@@ -32,15 +33,23 @@ export default function Signup() {
         password: password,
         password_confirmation: passwordConfirm,
       }),
-    })
-      .then((r) => r.json())
-      .then((d) => {
-        console.log(d)
-      setPassword("")
-      setUsername("")
-      setPasswordConfirm("")
-      history.push("/home")
-    })
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          console.log(user);
+          setPassword("");
+          setUsername("");
+          setPasswordConfirm("");
+          setErrors([]);
+          history.push("/home");
+        });
+      } else {
+        r.json().then((err) => {
+          console.log(err.errors);
+          setErrors(err.errors);
+        });
+      }
+    });
   }
 
   return (
@@ -74,6 +83,9 @@ export default function Signup() {
       </button>
       <br />
       <Link to="/login">{"Login"}</Link>
+      {errors.map((err) => (
+        <h4 key={err}>{err}</h4>
+      ))}
     </div>
   );
 }

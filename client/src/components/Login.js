@@ -4,9 +4,9 @@ import { Link, useHistory } from "react-router-dom";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [errors, setErrors] = useState("");
 
-  const history = useHistory()
+  const history = useHistory();
 
   function handleUsername(e) {
     e.preventDefault();
@@ -18,11 +18,6 @@ export default function Login() {
     setPassword(e.target.value);
   }
 
-  function handlePasswordConfirm(e) {
-    e.preventDefault();
-    setPasswordConfirm(e.target.value);
-  }
-
   function handleLogin() {
     fetch("/login", {
       method: "POST",
@@ -30,17 +25,23 @@ export default function Login() {
       body: JSON.stringify({
         username: username,
         password: password,
-        password_confirmation: passwordConfirm,
       }),
-    })
-      .then((r) => r.json())
-      .then((d) => {
-        console.log(d)
-        setPassword("")
-      setUsername("")
-      setPasswordConfirm("")
-      history.push("/home")
-      })
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          console.log(user);
+          setPassword("");
+          setUsername("");
+          setErrors("");
+          history.push("/home");
+        });
+      } else {
+        r.json().then((err) => {
+          console.log(err);
+          setErrors(err.error);
+        });
+      }
+    });
   }
 
   return (
@@ -61,19 +62,12 @@ export default function Login() {
         onChange={handlePassword}
       />
       <br />
-      <input
-        type="password"
-        id="passwordConfirm"
-        placeholder="Confirm Password"
-        value={passwordConfirm}
-        onChange={handlePasswordConfirm}
-      />
-      <br />
       <button type="button" onClick={handleLogin}>
         Login
       </button>
-      <br/>
+      <br />
       <Link to="/signup">{"Signup"}</Link>
+      {<h4 key={errors}>{errors}</h4>}
     </div>
   );
 }
