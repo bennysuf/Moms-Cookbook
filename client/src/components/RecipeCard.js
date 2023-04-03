@@ -5,7 +5,7 @@ export default function RecipeCard({ recipe }) {
 
   const recipes = recipe.map((rec) => {
     return (
-      <li>
+      <li key={rec.id}>
         <h3>{rec.title}</h3>
         <p>{rec.directions}</p>
         <p>{rec.ingredients}</p>
