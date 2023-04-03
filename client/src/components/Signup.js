@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-export default function Signup() {
+export default function Signup({setUser}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -36,16 +36,11 @@ export default function Signup() {
     }).then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          console.log(user);
-          setPassword("");
-          setUsername("");
-          setPasswordConfirm("");
-          setErrors([]);
+          setUser(user)
           history.push("/home");
         });
       } else {
         r.json().then((err) => {
-          console.log(err.errors);
           setErrors(err.errors);
         });
       }
@@ -89,3 +84,5 @@ export default function Signup() {
     </div>
   );
 }
+
+//TODO, add user to state
