@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-export default function Login() {
+export default function Login({setUser}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
@@ -29,17 +29,11 @@ export default function Login() {
     }).then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          console.log(user);
-          setPassword("");
-          setUsername("");
-          setErrors("");
-          history.push("/home");
+          setUser(user)
+          history.push("/home")
         });
       } else {
-        r.json().then((err) => {
-          console.log(err);
-          setErrors(err.error);
-        });
+        r.json().then((err) =>  setErrors(err.error));
       }
     });
   }
@@ -71,3 +65,5 @@ export default function Login() {
     </div>
   );
 }
+
+// TODO, add user to state
