@@ -4,6 +4,7 @@ export default function Logout() {
   const history = useHistory();
 
   function onLogout() {
+    console.log("Logged out")
     fetch("/logout", {
       method: "DELETE"
     })
