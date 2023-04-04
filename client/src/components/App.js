@@ -1,49 +1,97 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch, useHistory, Link } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
 import Signup from "./Signup";
-import NewRecipe from "./NewRecipe";
+// import NewRecipe from "./NewRecipe";
+import RecipeCard from "./RecipeCard";
+import Logout from "./Logout";
+
 function App() {
   const [user, setUser] = useState(null);
-  // console.log("user in APP", !user);
+  const [recipe, setRecipe] = useState([]);
 
   const history = useHistory();
 
-  // console.log("from App", user)
-
   useEffect(() => {
     fetch("/user").then((r) => {
-      // console.log("fetch", r.json())
       if (r.ok) {
-        r.json().then((user) => setUser(user));
+        r.json().then((user) => {
+          setUser(user);
+          setRecipe(user.recipes);
+        });
       } else {
-        // return <Route path="/login"><Login setUser={setUser}/></Route>
         history.push("/login");
       }
     });
   }, []);
 
+  // if (!user) { //will go to login first before state loads, need to reload page to get current data
+  //   return <Login setUser={setUser} />;
+  // } else {
+  //   return (
+  //     <>
+  //       <Logout />
+  //       <button>New recipe</button>
+  //       <h1>Hello </h1>
+  //       {console.log(user.recipes)}
+  //       <ul>
+  //         {recipe.map((rec) => <RecipeCard key={rec.id} recipe={rec}/>)}
+  //        {/* {recipe ? recipe.map((rec) => <RecipeCard key={rec.id} recipe={rec}/>) : null} */}
+  //       </ul>
+  //     </>
+  //   );
+  // }
+
+  // }
   return (
     <>
-      {/* <Switch> */}
-      <Route path="/login">
+      {!user ? (
+        <>
+          <Route path="/login">
+            <Login setUser={setUser} />
+            {console.log("Welcome")}
+          </Route>
+          <Route path="/signup">
+            <Signup setUser={setUser} />
+          </Route>
+        </>
+      ) : (
+        <>
+          <Route path="/home">
+            {/* <Logout /> */}
+            <Home recipe={recipe}/>
+            {/* <button>New recipe</button>
+            <h1>Hello </h1>
+            {console.log(recipe)}
+            <ul>
+              {recipe.map((rec) => (
+                <RecipeCard key={rec.id} recipe={rec} />
+              ))}
+            </ul> */}
+          </Route>
+        </>
+      )}
+      {/* //TODO ternary, if user return login with route */}
+      {/* <Route path="/login">
         <Login setUser={setUser} />
       </Route>
-      <Route path="/signup">
-        <Signup setUser={setUser} />
-      </Route>
-      <Route path="/home">
-        <Home user={user} />
-        {/* <Home /> */}
-      </Route>
-      <Route path="new-recipe">{/* <NewRecipe id={user.id} /> */}</Route>
-      <Route path="/new">
-        <NewRecipe />
-      </Route>
+      <Switch>
+        <Route path="/signup">
+          <Signup setUser={setUser} />
+        </Route>
+        <Route path="/home">
+          {/* <RecipeCard */}
+      {/* <Home user={user} /> */}
+      {/* </> </Route> */}
+      {/* <Route path="new-recipe"><NewRecipe id={user.id} /></Route> */}
+      {/* <Route path="/new"> */}
+      {/* <NewRecipe /> */}
+      {/* </Route> */}
+      {/* ternary if user then login, else Home and co (can then move everything up from home) */}
       {/* ^ route for development */}
       {/* </Switch> */}
-      {/* <div>{!user ? null : <Home user={user} />}</div> */}
+      {/* {/* <div>{!user ? null : <Home user={user} />}</div> */}
     </>
   );
 }
@@ -54,3 +102,4 @@ export default App;
 
 //remove Home? have newcard and recipecard called in App
 //? how can we call route in another way
+//! export error is from react-script old version
