@@ -10,13 +10,36 @@ export default function RecipeEdit({ recipe }) {
   const [newTitle, setNewTitle] = useState(title);
   const [newDirections, setNewDirections] = useState(directions);
   const [newIngredients, setNewIngredients] = useState(ingredients);
-//   console.log(newTitle)
-
+  const [errors, setErrors] = useState([]);
+ 
   function handleSub(e) {
     e.preventDefault();
-    //fetch here
-    //update the recipe state
-    //history.push("/home")
+    setErrors([]);
+    fetch(`/recipes/${recipeId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: recipeId,
+        title: newTitle,
+        directions: newDirections,
+        ingredients: newIngredients,
+      }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((d) => {
+          //update the recipe state
+          //history.push("/home")
+        });
+      } else {
+        r.json().then((err) => {
+          const arr = [];
+          for (const key in err.errors) {
+            arr.push(`${key}: ${err.errors[key]}`);
+          }
+          setErrors(arr);
+        });
+      }
+    });
   }
 
   return (
@@ -44,6 +67,7 @@ export default function RecipeEdit({ recipe }) {
       />
       <br />
       <button type="submit">submit</button>
+      {errors.map(err => <h3>{err}</h3>)}
     </form>
   );
 }
