@@ -1,17 +1,17 @@
+import { Link, } from "react-router-dom";
+// import RecipeEdit from "./RecipeEdit";
+
 export default function RecipeCard({ recipe }) {
-
-  const { title, directions, ingredients } = recipe;
-
-  function onEdit() {
-    //take me to nested route
-  }
+        const { id, title, directions, ingredients } = recipe;
 
   return (
-    <li>
+    <div>
+      <li>
         <h3>{title}</h3>
         <p>{directions}</p>
         <p>{ingredients}</p>
-        <button onClick={onEdit}>Edit</button>
-    </li>
+       <Link to={`/home/${id}`}>Edit</Link>
+      </li>
+    </div>
   );
 }
