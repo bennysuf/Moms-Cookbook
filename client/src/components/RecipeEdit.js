@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
-export default function RecipeEdit({ recipe }) {
+export default function RecipeEdit({ recipe, setRecipe }) {
   const { recipeId } = useParams();
+  const history = useHistory();
 
-  const recipes = recipe.filter((rec) => rec.id == recipeId); //=== doesnt work
+  const recipes = recipe.filter((rec) => rec.id == recipeId); //=== doesn't work
   const { title, directions, ingredients } = recipes[0];
 
   const [newTitle, setNewTitle] = useState(title);
   const [newDirections, setNewDirections] = useState(directions);
   const [newIngredients, setNewIngredients] = useState(ingredients);
   const [errors, setErrors] = useState([]);
- 
+
   function handleSub(e) {
     e.preventDefault();
     setErrors([]);
@@ -27,8 +28,20 @@ export default function RecipeEdit({ recipe }) {
     }).then((r) => {
       if (r.ok) {
         r.json().then((d) => {
-          //update the recipe state
-          //history.push("/home")
+          const update = recipe.map((item) => {
+            if (item.id === d.id) {
+              return {
+                id: parseInt(recipeId),
+                title: newTitle,
+                directions: newDirections,
+                ingredients: newIngredients,
+              };
+            } else {
+              return item;
+            }
+          });
+          setRecipe(update);
+          history.push("/home");
         });
       } else {
         r.json().then((err) => {
@@ -67,7 +80,9 @@ export default function RecipeEdit({ recipe }) {
       />
       <br />
       <button type="submit">submit</button>
-      {errors.map(err => <h3>{err}</h3>)}
+      {errors.map((err) => (
+        <h3>{err}</h3>
+      ))}
     </form>
   );
 }
