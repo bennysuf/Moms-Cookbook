@@ -3,9 +3,6 @@ import { Route, useHistory } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
 import Signup from "./Signup";
-// import NewRecipe from "./NewRecipe";
-import RecipeCard from "./RecipeCard";
-import Logout from "./Logout";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -38,7 +35,7 @@ function App() {
       ) : (
         <>
           <Route path="/home">
-            <Home user={user}/>
+            <Home user={user} />
           </Route>
         </>
       )}
@@ -48,6 +45,6 @@ function App() {
 
 export default App;
 
-//TODO: on logout, set user to null, use context
+//TODO: work on new recipe
 
 //! export error is from react-script old version
