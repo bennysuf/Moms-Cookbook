@@ -66,4 +66,3 @@ export default function Login({setUser}) {
   );
 }
 
-// TODO, add user to state
