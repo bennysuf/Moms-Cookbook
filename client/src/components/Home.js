@@ -5,14 +5,15 @@ import Logout from "./Logout";
 import RecipeCard from "./RecipeCard";
 import RecipeEdit from "./RecipeEdit";
 
-export default function Home({ user, setUser }) {
+export default function Home({ user, setUser, setRecipe, recipe }) {
+// export default function Home({ user, setUser }) {
   const history = useHistory();
 
   if (!user) {
     history.push("/login");
   } //need this here, wont work in App component (will always push to login before user gets updated)
 
-  const [recipe, setRecipe] = useState(user.recipes);
+//   const [recipe, setRecipe] = useState(user.recipes);
 
   const recipes = recipe.map((rec) => <RecipeCard key={rec.id} recipe={rec} />);
 
