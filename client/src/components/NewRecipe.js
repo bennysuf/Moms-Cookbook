@@ -1,18 +1,41 @@
+import { useState } from "react";
 
-export default function NewRecipe(){
+export default function NewRecipe({ recipe, setRecipe }) {
+// export default function NewRecipe() {
+  const [newTitle, setNewTitle] = useState("");
+  const [newDirections, setNewDirections] = useState("");
+  const [newIngredients, setNewIngredients] = useState("");
+
+  function handleEdit() {
+    //fetch POST
+    //.then(update recipe state)
+  }
 
 
-    function handleEdit() {
-
-    }
-
-    return (
-        <>
-        <form onSubmit={handleEdit}>
-            {/* text field here */}
-            <button type="submit">Edit</button>
-        </form>
-        </>
-    )
-
+  return (
+    <form onSubmit={handleEdit}>
+      <input
+        type="text"
+        placeholder="Title"
+        value={newTitle}
+        onChange={(e) => setNewTitle(e.target.value)}
+      />
+      <br />
+      <input
+        type="text"
+        placeholder="Directions"
+        value={newDirections}
+        onChange={(e) => setNewDirections(e.target.value)}
+      />
+      <br />
+      <input
+        type="text"
+        placeholder="Ingredients"
+        value={newIngredients}
+        onChange={(e) => setNewIngredients(e.target.value)}
+      />
+      <br />
+      <button type="submit">Add recipe</button>
+    </form>
+  );
 }
