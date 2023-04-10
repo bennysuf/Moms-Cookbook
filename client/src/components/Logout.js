@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 
-export default function Logout() {
+export default function Logout({setUser}) {
+
   const history = useHistory();
 
   function onLogout() {
@@ -8,7 +9,10 @@ export default function Logout() {
     fetch("/logout", {
       method: "DELETE"
     })
-    .then(() => history.push("/login"))
+    .then(() => {
+      setUser(null)
+      history.push("/login")
+    })
   }
 
   return (
