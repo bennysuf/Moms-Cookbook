@@ -29,6 +29,11 @@ export default function RecipeEdit({ recipe, setRecipe }) {
       if (r.ok) {
         r.json().then((d) => {
           const update = recipe.map((item) => {
+              // const returns = recipe.filter(rec => {
+              //   const check = rec.id !== d.id && item
+              //   return check
+              // })
+              // console.log("Updated", returns)
             if (item.id === d.id) {
               return {
                 id: parseInt(recipeId),
@@ -53,6 +58,18 @@ export default function RecipeEdit({ recipe, setRecipe }) {
         });
       }
     });
+  }
+
+  function onDelete() {
+    fetch(`/recipes/${recipeId}`, {
+      method: "DELETE"
+    })
+      .then((r) => {r.json()}) //?need {} in order to prevent json error
+      .then(() => {
+        setRecipe(recipe.filter((rec) => rec.id !== parseInt(recipeId)));
+        history.push("/home");
+      })
+      .catch((err) => console.log(err))
   }
 
   return (
@@ -80,6 +97,7 @@ export default function RecipeEdit({ recipe, setRecipe }) {
       />
       <br />
       <button type="submit">submit</button>
+      <button onClick={onDelete}>Delete recipe</button>
       {errors.map((err) => (
         <h3>{err}</h3>
       ))}
