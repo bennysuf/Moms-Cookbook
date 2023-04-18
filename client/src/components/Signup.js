@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "./App";
 
-export default function Signup({setUser}) {
+export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errors, setErrors] = useState([]);
+
+  const { setUser } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -36,7 +39,7 @@ export default function Signup({setUser}) {
     }).then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          setUser(user)
+          setUser(user);
           history.push("/home");
         });
       } else {
@@ -84,5 +87,3 @@ export default function Signup({setUser}) {
     </div>
   );
 }
-
-//TODO, add user to state
