@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "./App";
 
-export default function NewRecipe({ recipe, setRecipe }) {
+export default function NewRecipe() {
   const [newTitle, setNewTitle] = useState("");
   const [newDirections, setNewDirections] = useState("");
   const [newIngredients, setNewIngredients] = useState("");
+  const [newCategory, setNewCategory] = useState("");
   const [errors, setErrors] = useState([]);
 
   const history = useHistory();
+
+  const { recipe, setRecipe } = useContext(UserContext);
 
   function handleAdd(e) {
     e.preventDefault();
@@ -16,6 +20,7 @@ export default function NewRecipe({ recipe, setRecipe }) {
       title: newTitle,
       directions: newDirections,
       ingredients: newIngredients,
+      category: newCategory,
     };
     fetch("/recipes", {
       method: "POST",
@@ -29,11 +34,11 @@ export default function NewRecipe({ recipe, setRecipe }) {
         });
       } else {
         r.json().then((err) => {
-            const arr = [];
-            for (const key in err.errors) {
-              arr.push(`${key}: ${err.errors[key]}`);
-            }
-            setErrors(arr);
+          const arr = [];
+          for (const key in err.errors) {
+            arr.push(`${key}: ${err.errors[key]}`);
+          }
+          setErrors(arr);
         });
       }
     });
@@ -61,6 +66,13 @@ export default function NewRecipe({ recipe, setRecipe }) {
         value={newIngredients}
         onChange={(e) => setNewIngredients(e.target.value)}
       />
+      <br />
+      <select onChange={(e) => setNewCategory(e.target.value)}>
+        <option value={newCategory}>Select meal</option>
+        <option value="Breakfast">Breakfast</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Dinner">Dinner</option>
+      </select>
       <br />
       <button type="submit">Add recipe</button>
       {errors.map((err) => (
