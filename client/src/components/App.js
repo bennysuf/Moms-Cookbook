@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Route, useHistory } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
 import Signup from "./Signup";
 import NewRecipe from "./NewRecipe";
+
+export const UserContext = createContext(null);
 
 function App() {
   const [user, setUser] = useState(null);
@@ -16,7 +18,7 @@ function App() {
       if (r.ok) {
         r.json().then((user) => {
           setUser(user);
-          setRecipe(user.recipes)
+          setRecipe(user.recipes);
         });
       } else {
         history.push("/login");
@@ -25,36 +27,23 @@ function App() {
   }, []);
 
   return (
-    <>
+    <UserContext.Provider value={{ user, setUser, recipe, setRecipe }}>
       {!user ? (
         <>
-          <Route path="/login">
-            <Login setUser={setUser} />
-          </Route>
-          <Route path="/signup">
-            <Signup setUser={setUser} />
-          </Route>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
         </>
       ) : (
         <>
-          <Route path="/home">
-            <Home user={user} setUser={setUser} recipe={recipe} setRecipe={setRecipe}/>
-            {/* <Home user={user} setUser={setUser} /> */}
-            {/* //TODO use context to move down */}
-          </Route>
-          <Route path="/add-new">
-            <NewRecipe recipe={recipe} setRecipe={setRecipe}/>
-          </Route>
+          <Route path="/home" component={Home} />
+          <Route path="/add-new" component={NewRecipe} />
         </>
       )}
-    </>
+    </UserContext.Provider>
   );
 }
 
 export default App;
-
-//TODO: work on new recipe
-
 //! export error is from react-script old version
 
-//? edit page doesn't change, only when reloaded 
+//? edit page doesn't change, only when reloaded
