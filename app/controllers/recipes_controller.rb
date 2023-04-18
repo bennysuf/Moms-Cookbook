@@ -8,13 +8,11 @@ class RecipesController < ApplicationController
     def create
         user = find_user
         if user
-            # debugger
             category = Category.find_by(meal: params[:category])
             recipe = Recipe.create!(
                 title: params[:title],
                 directions: params[:directions],
                 user_id: user.id,
-                # user_id: params[:user_id],
                 ingredients: params[:ingredients]
                 )
             joiner = RecipeCategory.create(recipe_id: recipe.id, category_id: category.id)
