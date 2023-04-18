@@ -2,58 +2,73 @@ class RecipesController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
+    #! Unpermitted parameter: :recipe. 
+    #? how to work around it
+
     def create
-        user = User.find_by(id: session[:user_id])
+        user = find_user
         if user
+            # debugger
+            category = Category.find_by(meal: params[:category])
             recipe = Recipe.create!(
                 title: params[:title],
                 directions: params[:directions],
                 user_id: user.id,
+                # user_id: params[:user_id],
                 ingredients: params[:ingredients]
                 )
+            joiner = RecipeCategory.create(recipe_id: recipe.id, category_id: category.id)
             render json: recipe, status: :created
-        else
-            render json: {errors: "Not logged in"}, status: :unauthorized
         end
     end
 
     def update
-        user = User.find_by(id: session[:user_id])
+        user = find_user
         if user
             recipe = Recipe.find_by_id(params[:id])
-            byebug
-            recipe.update(recipe_params) #? how to update?
+            joiner = RecipeCategory.find_by(recipe_id: recipe.id, category_id: recipe.categories.ids) 
+            category = Category.find_by(meal: params[:category])
+            # recipe.update(recipe_params) #? how to update?
+            recipe.update!(
+                title: params[:title],
+                directions: params[:directions],
+                ingredients: params[:ingredients]
+            )
+            joiner.update(category_id: category.id)
             render json: recipe, status: :accepted
-        else
-            render json: {errors: "Not logged in"}, status: :unauthorized
         end
     end
 
     def destroy
-        user = User.find_by(id: session[:user_id])
+        user = find_user
         if user
-            recipe = Recipe.find_by_id(params[:id])
+            recipe = Recipe.find_by_id(params[:id]) #?unxepeted Unexpected end of JSON input
             recipe.destroy
-            render json: recipe, status: :no_content
-        else
-            render json: {errors: "Not logged in"}, status: :unauthorized
+            head :no_content
         end
     end
 
-    def index
-        user = User.find_by(id: session[:user_id])
+    def show
+        user = find_user
         if user
-            recipe = user.recipes
+            recipe = Recipe.find_by_id(params[:id])
             render json: recipe, status: :ok
-        else
-            render json: {errors: "Not logged in"}, status: :unauthorized
         end
+    end
+
+    def index 
+        recipe = Recipe.all.order("created_at DESC")
+        render json: recipe, status: :ok
     end
 
     private
 
+    def find_user 
+        User.find_by(id: session[:user_id])
+    end
+
     def recipe_params
-        params.permit(:title, :directions, :ingredients)
+        params.permit(:id, :title, :directions, :ingredients)
     end
 
     def render_not_found_response
