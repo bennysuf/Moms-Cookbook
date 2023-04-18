@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "./App";
 
-export default function Login({setUser}) {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
+
+  const { setUser, setRecipe } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -29,11 +32,12 @@ export default function Login({setUser}) {
     }).then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          setUser(user)
-          history.push("/home")
+          setUser(user);
+          setRecipe(user.recipes);
+          history.push("/home");
         });
       } else {
-        r.json().then((err) =>  setErrors(err.error));
+        r.json().then((err) => setErrors(err.error));
       }
     });
   }
@@ -65,4 +69,3 @@ export default function Login({setUser}) {
     </div>
   );
 }
-
