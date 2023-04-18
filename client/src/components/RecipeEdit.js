@@ -19,7 +19,6 @@ export default function RecipeEdit() {
   const [newCategory, setNewCategory] = useState(categories[0].meal);
   const [errors, setErrors] = useState([]);
 
-  console.log(newCategory);
   function handleSub(e) {
     e.preventDefault();
     setErrors([]);
