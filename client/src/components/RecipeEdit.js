@@ -7,7 +7,7 @@ export default function RecipeEdit() {
 
   const history = useHistory();
 
-  const { recipe, setRecipe } = useContext(UserContext);
+  const { recipe, setRecipe, setView } = useContext(UserContext);
 
   const recipes = recipe.filter((rec) => rec.id == recipeId); //=== doesn't work
   const { title, directions, ingredients, categories } = recipes[0];
@@ -16,7 +16,8 @@ export default function RecipeEdit() {
   const [newTitle, setNewTitle] = useState(title);
   const [newDirections, setNewDirections] = useState(directions);
   const [newIngredients, setNewIngredients] = useState(ingredients);
-  const [newCategory, setNewCategory] = useState(categories[0].meal);
+  const [newCategory, setNewCategory] = useState(categories[0].meal); //*once project complete, uncomment
+  // const [newCategory, setNewCategory] = useState("");
   const [errors, setErrors] = useState([]);
 
   function handleSub(e) {
@@ -41,7 +42,8 @@ export default function RecipeEdit() {
             return rec.id !== item.id ? rec : item;
           });
           setRecipe(returns);
-          history.push("/home");
+          setView(item);
+          history.push("/recipes");
         });
       } else {
         r.json().then((err) => {
@@ -66,7 +68,7 @@ export default function RecipeEdit() {
         setRecipe(recipe.filter((rec) => rec.id !== parseInt(recipeId)));
         history.push("/home");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("Error", err));
   }
 
   return (
@@ -93,12 +95,12 @@ export default function RecipeEdit() {
         onChange={(e) => setNewIngredients(e.target.value)}
       />
       <br />
-      <select onChange={(e) => setNewCategory(e.target.value)}>
-        <option value={newCategory}>Select meal</option>
-        <option value="Breakfast">Breakfast</option>
-        <option value="Lunch">Lunch</option>
-        <option value="Dinner">Dinner</option>
-      </select>
+        <div onChange={(e) => setNewCategory(e.target.value)}>
+        <p>Meal type</p>
+        <input type="radio" name="meal" value="Breakfast" checked={newCategory === "Breakfast" ? "checked" : null} />Breakfast<br/>
+        <input type="radio" name="meal" value="Lunch" checked={newCategory === "Lunch" ? "checked" : null}/>Lunch<br/>
+        <input type="radio" name="meal" value="Dinner" checked={newCategory === "Dinner" ? "checked" : null}/>Dinner<br/>
+        </div>
       <br />
       <button type="submit">submit</button>
       <button onClick={onDelete}>Delete recipe</button>
