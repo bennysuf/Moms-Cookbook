@@ -5,13 +5,11 @@ export default function RecipeCard({ recipe }) {
 
   return (
     <div>
-      <details>
-        <summary>{title}</summary>
-        <h5>Meal: {categories[0].meal}</h5>
+        <h4>{title}</h4>
+        <h5>Meal: {categories[0]?.meal}</h5>
         <p>Directions: {directions}</p>
         <p>Ingredients: {ingredients}</p>
-        <Link to={`/home/${id}`}>Edit</Link>
-      </details>
+        <Link to={`/recipes/${id}`}>Edit</Link>
     </div>
   );
 }
