@@ -4,12 +4,14 @@ import Home from "./Home";
 import Login from "./Login";
 import Signup from "./Signup";
 import NewRecipe from "./NewRecipe";
+import RecipePage from "./RecipePage";
 
 export const UserContext = createContext(null);
 
 function App() {
   const [user, setUser] = useState(null);
   const [recipe, setRecipe] = useState([]);
+  const [view, setView] = useState("");
 
   const history = useHistory();
 
@@ -27,7 +29,9 @@ function App() {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, recipe, setRecipe }}>
+    <UserContext.Provider
+      value={{ user, setUser, recipe, setRecipe, view, setView }}
+    >
       {!user ? (
         <>
           <Route path="/login" component={Login} />
@@ -36,6 +40,7 @@ function App() {
       ) : (
         <>
           <Route path="/home" component={Home} />
+          <Route path="/recipes" component={RecipePage} />
           <Route path="/add-new" component={NewRecipe} />
         </>
       )}
@@ -46,4 +51,5 @@ function App() {
 export default App;
 //! export error is from react-script old version
 
-//? edit page doesn't change, only when reloaded
+// TODO: validate category (custom validation)
+// ? add multiple categories? (checkbox instead of radio)
