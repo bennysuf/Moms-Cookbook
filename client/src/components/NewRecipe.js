@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "./App";
+import NavBar from "./NavBar";
 
 export default function NewRecipe() {
   const [newTitle, setNewTitle] = useState("");
@@ -45,39 +46,42 @@ export default function NewRecipe() {
   }
 
   return (
-    <form onSubmit={handleAdd}>
-      <input
-        type="text"
-        placeholder="Title"
-        value={newTitle}
-        onChange={(e) => setNewTitle(e.target.value)}
-      />
-      <br />
-      <input
-        type="text"
-        placeholder="Directions"
-        value={newDirections}
-        onChange={(e) => setNewDirections(e.target.value)}
-      />
-      <br />
-      <input
-        type="text"
-        placeholder="Ingredients"
-        value={newIngredients}
-        onChange={(e) => setNewIngredients(e.target.value)}
-      />
-      <br />
-      <select onChange={(e) => setNewCategory(e.target.value)}>
-        <option value={newCategory}>Select meal</option>
-        <option value="Breakfast">Breakfast</option>
-        <option value="Lunch">Lunch</option>
-        <option value="Dinner">Dinner</option>
-      </select>
-      <br />
-      <button type="submit">Add recipe</button>
-      {errors.map((err) => (
-        <h3>{err}</h3>
-      ))}
-    </form>
+    <div>
+      <NavBar />
+      <form onSubmit={handleAdd}>
+        <input
+          type="text"
+          placeholder="Title"
+          value={newTitle}
+          onChange={(e) => setNewTitle(e.target.value)}
+          />
+        <br />
+        <input
+          type="text"
+          placeholder="Directions"
+          value={newDirections}
+          onChange={(e) => setNewDirections(e.target.value)}
+          />
+        <br />
+        <input
+          type="text"
+          placeholder="Ingredients"
+          value={newIngredients}
+          onChange={(e) => setNewIngredients(e.target.value)}
+          />
+        <br />
+        <div onChange={(e) => setNewCategory(e.target.value)}>
+          <p>Meal type</p>
+          <input type="radio" name="meal" value="Breakfast"/>Breakfast<br/>
+          <input type="radio" name="meal" value="Lunch"/>Lunch<br/>
+          <input type="radio" name="meal" value="Dinner"/>Dinner<br/>
+          </div>
+        <br />
+        <button type="submit">Add recipe</button>
+        {errors.map((err) => (
+          <h3 key={err}>{err}</h3>
+          ))}
+      </form>
+    </div>
   );
 }
