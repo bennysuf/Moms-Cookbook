@@ -7,9 +7,11 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
 
-  const { setUser, setRecipe } = useContext(UserContext);
+  const { user, setUser, setRecipe } = useContext(UserContext);
 
   const history = useHistory();
+
+  if (user) history.push("/home");
 
   function handleUsername(e) {
     e.preventDefault();
@@ -43,7 +45,7 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <div className="input" style={{ marginTop: "10%" }}>
       <input
         type="text"
         id="username"
