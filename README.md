@@ -1,24 +1,57 @@
-# README
+# My Phase-4 Project - Mom's Cookbook
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## What my project is:
+    Are you coming up with new recipe ideas or tweaking old ones?
+    Does your mom have the best recipes but no source? 
+    Introducing "Mom's Cookbook", an app that allows you to document your recipes.
 
-Things you may want to cover:
+## How to start it up:
+    Clone the repository and open it in your terminal. 
+    Run:
+`$ bundle install` or `$ bundle i`
 
-* Ruby version
+    Once your dependencies are installed, run:
+`$ rails db:migrate`
 
-* System dependencies
+    Then in a new terminal, run:
+`$ rails server` or `$ rails s`
 
-* Configuration
 
-* Database creation
+   This will start up the Backend server.
 
-* Database initialization
+   To quit the server, press CTRL + C.
 
-* How to run the test suite
+**To start up frontend**
 
-* Services (job queues, cache servers, search engines, etc.)
+    In a new terminal run: 
+`$ npm install --prefix client`
 
-* Deployment instructions
+    Then: 
+`$ npm start --prefix client`
 
-* ...
+
+    This will start up the Frontend server.
+    You will then be taken to the browser to start using the application.
+
+    To quit the server, cd into client then press CTRL + C.
+
+## How to use it:
+    If you already have an account then login using your login information, 
+    if not then click on "Signup" to create an account. 
+    Once you are signed in you will be taken to the Home page,
+    which houses all your recipes.
+img
+
+    To go to home, click the 'Home' button.
+img
+    To create a recipe yourself, click the 'New recipe' button. 
+img
+    All on the top left side on the app bar.
+
+    To edit or delete a recipe, click on the "View" button.
+    Once ready, click on the "Submit" or "Delete" button to update your changes.
+img
+
+## Key details:
+    UI source: 
+    https://picocss.com/
