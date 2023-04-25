@@ -3,5 +3,3 @@ class RecipeSerializer < ActiveModel::Serializer
   has_many :categories
   has_one :user
 end
-
-#TODO show category
