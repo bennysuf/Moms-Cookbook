@@ -5,6 +5,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import NewRecipe from "./NewRecipe";
 import RecipePage from "./RecipePage";
+import "@picocss/pico/css/pico.min.css";
 
 export const UserContext = createContext(null);
 
@@ -32,11 +33,11 @@ function App() {
     <UserContext.Provider
       value={{ user, setUser, recipe, setRecipe, view, setView }}
     >
+      <Route path="/login" component={Login} />
+      <Route path="/signup" component={Signup} />
+      {/* not in ternary so if signed in, cant access login */}
       {!user ? (
-        <>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-        </>
+        <> </>
       ) : (
         <>
           <Route path="/home" component={Home} />
@@ -52,4 +53,5 @@ export default App;
 //! export error is from react-script old version
 
 // TODO: validate category (custom validation)
-// ? add multiple categories? (checkbox instead of radio)
+
+// TODO categories rendering
