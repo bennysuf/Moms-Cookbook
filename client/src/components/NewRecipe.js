@@ -49,38 +49,65 @@ export default function NewRecipe() {
     <div>
       <NavBar />
       <form onSubmit={handleAdd}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
+        <div className="input">
+          <input
+            type="text"
+            placeholder="Title"
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
           />
-        <br />
-        <input
-          type="text"
-          placeholder="Directions"
-          value={newDirections}
-          onChange={(e) => setNewDirections(e.target.value)}
+          <br />
+          <input
+            type="text"
+            placeholder="Directions"
+            value={newDirections}
+            onChange={(e) => setNewDirections(e.target.value)}
           />
-        <br />
-        <input
-          type="text"
-          placeholder="Ingredients"
-          value={newIngredients}
-          onChange={(e) => setNewIngredients(e.target.value)}
+          <br />
+          <input
+            type="text"
+            placeholder="Ingredients"
+            value={newIngredients}
+            onChange={(e) => setNewIngredients(e.target.value)}
           />
-        <br />
-        <div onChange={(e) => setNewCategory(e.target.value)}>
+          <br />
+        </div>
+        <div
+          style={{ textAlign: "center" }}
+          onChange={(e) => setNewCategory(e.target.value)}
+        >
           <p>Meal type</p>
-          <input type="radio" name="meal" value="Breakfast"/>Breakfast<br/>
-          <input type="radio" name="meal" value="Lunch"/>Lunch<br/>
-          <input type="radio" name="meal" value="Dinner"/>Dinner<br/>
-          </div>
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="meal"
+            value="Breakfast"
+          />
+          Breakfast
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="meal"
+            value="Lunch"
+          />
+          Lunch
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="meal"
+            value="Dinner"
+          />
+          Dinner
+        </div>
         <br />
-        <button type="submit">Add recipe</button>
-        {errors.map((err) => (
-          <h3 key={err}>{err}</h3>
+        <button className="button" type="submit">
+          Add recipe
+        </button>
+        <div className="input" style={{ marginTop: "3%" }}>
+          {errors.map((err) => (
+            <h3 key={err}>{err}</h3>
           ))}
+        </div>
       </form>
     </div>
   );
