@@ -40,7 +40,6 @@
     if not then click on "Signup" to create an account. 
     Once you are signed in you will be taken to the Home page,
     which houses all your recipes.
-img
 
     To go to home, click the 'Home' button.
 img
