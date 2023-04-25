@@ -31,22 +31,26 @@ User.create(username: "mama", password: "amam", password_confirmation: "amam")
 # Recipe.create(title: Faker::Food.dish, directions: Faker::Food.description, ingredients: Faker::Food.ingredient, user_id:Faker::Number.within(range: 1..4))
 # Recipe.create(title: Faker::Food.dish, directions: Faker::Food.description, ingredients: Faker::Food.ingredient, user_id:Faker::Number.within(range: 1..4))
 # Recipe.create(title: Faker::Food.dish, directions: Faker::Food.description, ingredients: Faker::Food.ingredient, user_id:Faker::Number.within(range: 1..4))
-Recipe.create(title:"rice", directions: "put in pot, boil for 10 mins. let simmer.", ingredients: "rice, water, salt", user_id: 1)
-Recipe.create(title:"chulent", directions: "put everything from cabinet, place low heat till ready", ingredients: "everything, from, the, cabinet", user_id:2)
-Recipe.create(title:"Pizza", directions: "Three egg whites with spinach, mushrooms, caramelized onions, tomatoes and low-fat feta cheese. With herbed quinoa, and your choice of rye or whole-grain toast.", ingredients: "Butternut Lettuce", user_id: 3)
-Recipe.create( title: "Pork Sausage Roll",
- directions: "Three egg omelet with Roquefort cheese, chives, and ham. With a side of roasted potatoes, and your choice of toast or croissant.",
- ingredients: "Sesame Oil", user_id: 4,)
-Recipe.create(title:"Meatballs with Sauce", directions: "Two butter croissants of your choice (plain, almond or cheese). With a side of herb butter or house-made hazelnut spread.", ingredients: "Prunes", user_id: 3)
 
-Category.create(meal: "Breakfast")
-Category.create(meal: "Lunch")
-Category.create(meal: "Dinner")
+# Recipe.create(title:"rice", directions: "put in pot, boil for 10 mins. let simmer.", ingredients: "rice, water, salt", user_id: 1)
+# Recipe.create(title:"chulent", directions: "put everything from cabinet, place low heat till ready", ingredients: "everything, from, the, cabinet", user_id: 2)
+# Recipe.create(title:"Pizza", directions: "Three egg whites with spinach, mushrooms, caramelized onions, tomatoes and low-fat feta cheese. With herbed quinoa, and your choice of rye or whole-grain toast.", ingredients: "Butternut Lettuce", user_id: 3)
+# Recipe.create( title: "Pork Sausage Roll",
+#  directions: "Three egg omelet with Roquefort cheese, chives, and ham. With a side of roasted potatoes, and your choice of toast or croissant.",
+#  ingredients: "Sesame Oil", user_id: 4)
+# Recipe.create(title:"Meatballs with Sauce", directions: "Two butter croissants of your choice (plain, almond or cheese). With a side of herb butter or house-made hazelnut spread.", ingredients: "Prunes", user_id: 3)
 
-RecipeCategory.create(recipe_id: 4, category_id: 1)
-RecipeCategory.create(recipe_id: 1, category_id: 2)
-RecipeCategory.create(recipe_id: 2, category_id: 3)
-RecipeCategory.create(recipe_id: 4, category_id: 2)
-RecipeCategory.create(recipe_id: 3, category_id: 1)
+# Category.create(meal: "Breakfast", user_id: 1)
+# Category.create(meal: "Lunch", user_id: 2)
+# Category.create(meal: "Dinner", user_id: 3)
+# Category.create(meal: "Breakfast", user_id: 4)
+# Category.create(meal: "Lunch", user_id: 3)
+
+
+# RecipeCategory.create(recipe_id: 1, category_id: 1)
+# RecipeCategory.create(recipe_id: 2, category_id: 2)
+# RecipeCategory.create(recipe_id: 3, category_id: 3)
+# RecipeCategory.create(recipe_id: 4, category_id: 4)
+# RecipeCategory.create(recipe_id: 5, category_id: 5)
 
 puts "Seeding completed successfully"
