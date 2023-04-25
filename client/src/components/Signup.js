@@ -51,7 +51,7 @@ export default function Signup() {
   }
 
   return (
-    <div>
+    <div className="input" style={{ marginTop: "10%" }}>
       <input
         type="text"
         id="username"
