@@ -9,16 +9,17 @@ export default function RecipeEdit() {
 
   const { recipe, setRecipe, setView } = useContext(UserContext);
 
-  const recipes = recipe.filter((rec) => rec.id == recipeId); //=== doesn't work
+  const recipes = recipe.filter((rec) => rec.id === parseInt(recipeId));
   const { title, directions, ingredients, categories } = recipes[0];
 
   //useStates
   const [newTitle, setNewTitle] = useState(title);
   const [newDirections, setNewDirections] = useState(directions);
   const [newIngredients, setNewIngredients] = useState(ingredients);
-  const [newCategory, setNewCategory] = useState(categories[0].meal); //*once project complete, uncomment
-  // const [newCategory, setNewCategory] = useState("");
+  const [newCategory, setNewCategory] = useState(categories);
   const [errors, setErrors] = useState([]);
+
+  const meals = newCategory[0]?.meal;
 
   function handleSub(e) {
     e.preventDefault();
@@ -61,9 +62,7 @@ export default function RecipeEdit() {
     fetch(`/recipes/${recipeId}`, {
       method: "DELETE",
     })
-      .then((r) => {
-        r.json();
-      }) //?need {} in order to prevent json error
+      .then((r) => r.json())
       .then(() => {
         setRecipe(recipe.filter((rec) => rec.id !== parseInt(recipeId)));
         history.push("/home");
@@ -72,41 +71,76 @@ export default function RecipeEdit() {
   }
 
   return (
-    <form onSubmit={handleSub}>
-      <h1>Edit recipe</h1>
-      <input
-        type="text"
-        placeholder="Title"
-        value={newTitle}
-        onChange={(e) => setNewTitle(e.target.value)}
-      />
-      <br />
-      <input
-        type="text"
-        placeholder="Directions"
-        value={newDirections}
-        onChange={(e) => setNewDirections(e.target.value)}
-      />
-      <br />
-      <input
-        type="text"
-        placeholder="Ingredients"
-        value={newIngredients}
-        onChange={(e) => setNewIngredients(e.target.value)}
-      />
-      <br />
-        <div onChange={(e) => setNewCategory(e.target.value)}>
-        <p>Meal type</p>
-        <input type="radio" name="meal" value="Breakfast" checked={newCategory === "Breakfast" ? "checked" : null} />Breakfast<br/>
-        <input type="radio" name="meal" value="Lunch" checked={newCategory === "Lunch" ? "checked" : null}/>Lunch<br/>
-        <input type="radio" name="meal" value="Dinner" checked={newCategory === "Dinner" ? "checked" : null}/>Dinner<br/>
+    <div>
+      <form onSubmit={handleSub}>
+        <div className="input">
+          <input
+            type="text"
+            placeholder="Title"
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Directions"
+            value={newDirections}
+            onChange={(e) => setNewDirections(e.target.value)}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Ingredients"
+            value={newIngredients}
+            onChange={(e) => setNewIngredients(e.target.value)}
+          />
+          <br />
         </div>
-      <br />
-      <button type="submit">submit</button>
-      <button onClick={onDelete}>Delete recipe</button>
-      {errors.map((err) => (
-        <h3>{err}</h3>
-      ))}
-    </form>
+        <div
+          style={{ textAlign: "center" }}
+          onChange={(e) => setNewCategory(e.target.value)}
+        >
+          <p>Meal type</p>
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="meal"
+            value="Breakfast"
+            checked={meals === "Breakfast" ? "checked" : null}
+          />
+          Breakfast
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="meal"
+            value="Lunch"
+            checked={meals === "Lunch" ? "checked" : null}
+          />
+          Lunch
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="meal"
+            value="Dinner"
+            checked={meals === "Dinner" ? "checked" : null}
+          />
+          Dinner
+          <br />
+        </div>
+        <br />
+        <button className="button" type="submit">
+          Submit
+        </button>
+        <br />
+      </form>
+      <button className="button" type="button" onClick={onDelete}>
+        Delete recipe
+      </button>
+      <div className="input">
+        {errors.map((err) => (
+          <h3>{err}</h3>
+        ))}
+      </div>
+    </div>
   );
 }
