@@ -20,8 +20,10 @@ class RecipesController < ApplicationController
         category = recipe.categories.first
             joiner = RecipeCategory.find_by(recipe_id: params[:id], category_id: category.id) 
             recipe.update!(recipe_params)
-            category.update!(meal: params[:category])
-            joiner.update!(category_id: category.id)
+            if params[:category] == "Breakfast" || params[:category] == "Lunch" || params[:category] == "Dinner"
+                category.update!(meal: params[:category])
+                joiner.update!(category_id: category.id)
+            end
             render json: recipe, status: :accepted
         end
     end
