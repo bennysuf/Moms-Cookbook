@@ -6,12 +6,4 @@ class Recipe < ApplicationRecord
   validates :title, presence: true
   validates :directions, presence: true
   validates :ingredients, presence: true
-  # validate :meal_check
-
-  # def meal_check
-  #   # ? how to get access to categories
-  #   if category_ids #here check if category is empty
-  #     debugger
-  #   end
-  # end
 end
