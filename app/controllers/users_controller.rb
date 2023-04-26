@@ -12,21 +12,12 @@ class UsersController < ApplicationController
 
     def show
         user = find_user
-        if user
-            render json: user, include: ['recipes', 'recipes.categories'], status: :ok
-        else
-            render json: {errors: "Not authorized"}, status: :unauthorized
-        end
+        render json: user, status: :ok
     end
 
     def index
-        user = find_user
-        if user
-            user = User.all
-            render json: user, include: ['recipes', 'recipes.categories'], status: :ok
-        else
-            render json: {errors: "Not authorized"}, status: :unauthorized
-        end
+        user = User.all
+        render json: user, status: :ok
     end
 
     private 
