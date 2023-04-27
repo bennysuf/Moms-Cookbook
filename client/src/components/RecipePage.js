@@ -12,7 +12,7 @@ export default function RecipePage() {
     <>
       <NavBar />
       <Route exact path={`/recipes/:recipeId`} component={RecipeEdit} />
-      <RecipeCard key={view.id} recipe={view} />
+      <RecipeCard key={view.id} recipes={view} />
     </>
   );
 }
