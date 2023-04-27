@@ -13,7 +13,6 @@ export default function RecipeEdit() {
   const { difficulty, category, recipe } = filtered[0];
   const { title, directions, ingredients } = recipe;
   const { meal } = category;
-  // const { title, directions, ingredients, categories } = recipe[0];
 
   //useStates
   const [newTitle, setNewTitle] = useState(title);
@@ -22,8 +21,6 @@ export default function RecipeEdit() {
   const [newDifficulty, setNewDifficulty] = useState(difficulty);
   const [newCategory, setNewCategory] = useState(meal);
   const [errors, setErrors] = useState([]);
-
-  // const meals = newCategory[0]?.meal;
 
   function handleSub(e) {
     e.preventDefault();
@@ -34,7 +31,7 @@ export default function RecipeEdit() {
       directions: newDirections,
       ingredients: newIngredients,
       category: newCategory,
-      difficulty: newDifficulty
+      difficulty: newDifficulty,
     };
 
     fetch(`/recipe_categories/${recipeId}`, {

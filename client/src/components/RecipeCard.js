@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
 export default function RecipeCard({ recipes }) {
-  const {difficulty, id, recipe, category} = recipes
-  const {title, directions, ingredients} = recipe
-  const {meal} = category
+  const { difficulty, id, recipe, category } = recipes;
+  const { title, directions, ingredients } = recipe;
+  const { meal } = category;
 
   return (
     <div style={{ textAlign: "center" }}>

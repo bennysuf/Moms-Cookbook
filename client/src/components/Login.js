@@ -35,7 +35,9 @@ export default function Login() {
       if (r.ok) {
         r.json().then((user) => {
           setUser(user);
-          fetch("/recipe_categories").then((r) => r.json().then((d) => setRecipes(d)))
+          fetch("/recipe_categories").then((r) =>
+            r.json().then((d) => setRecipes(d))
+          );
           history.push("/home");
         });
       } else {

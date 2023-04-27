@@ -20,17 +20,16 @@ function App() {
     fetch("/user").then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-        setUser(user);
-        fetch("/recipe_categories").then((r) => r.json().then((d) => setRecipes(d)))
-          // setRecipe(user.recipes);
+          setUser(user);
+          fetch("/recipe_categories").then((r) =>
+            r.json().then((d) => setRecipes(d))
+          );
         });
       } else {
         history.push("/login");
       }
     });
   }, []);
-
-  // console.log("App", recipe)
 
   return (
     <UserContext.Provider
