@@ -8,11 +8,12 @@ export default function NewRecipe() {
   const [newDirections, setNewDirections] = useState("");
   const [newIngredients, setNewIngredients] = useState("");
   const [newCategory, setNewCategory] = useState("");
+  const [newDifficulty, setNewDifficulty] = useState("");
   const [errors, setErrors] = useState([]);
 
   const history = useHistory();
 
-  const { recipe, setRecipe } = useContext(UserContext);
+  const { recipes, setRecipes } = useContext(UserContext);
 
   function handleAdd(e) {
     e.preventDefault();
@@ -22,15 +23,16 @@ export default function NewRecipe() {
       directions: newDirections,
       ingredients: newIngredients,
       category: newCategory,
+      difficulty: newDifficulty
     };
-    fetch("/recipes", {
+    fetch("/recipe_categories", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(update),
     }).then((r) => {
       if (r.ok) {
         r.json().then((newItem) => {
-          setRecipe([...recipe, newItem]);
+          setRecipes([...recipes, newItem]);
           history.push("/home");
         });
       } else {
@@ -49,6 +51,37 @@ export default function NewRecipe() {
     <div>
       <NavBar />
       <form onSubmit={handleAdd}>
+        <div
+          style={{ textAlign: "center" }}
+          onChange={(e) => setNewDifficulty(e.target.value)}
+        >
+          <p>Difficulty</p>
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="difficulty"
+            value="Easy"
+            checked={newDifficulty === "Easy" ? "checked" : null}
+          />
+          Easy
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="difficulty"
+            value="Medium"
+            checked={newDifficulty === "Medium" ? "checked" : null}
+          />
+          Medium
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="difficulty"
+            value="Hard"
+            checked={newDifficulty === "Hard" ? "checked" : null}
+          />
+          Hard
+        </div>
+        <br />
         <div className="input">
           <input
             type="text"
