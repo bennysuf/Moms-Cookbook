@@ -42,14 +42,17 @@
     which houses all your recipes.
 
     To go to home, click the 'Home' button.
-img
+<img width="1439" alt="Screen Shot 2023-04-27 at 1 26 56 PM" src="https://user-images.githubusercontent.com/109253075/234941997-dd46ad3a-8409-49b4-b708-8494f5efdaa0.png">
+
     To create a recipe yourself, click the 'New recipe' button. 
-img
+
     All on the top left side on the app bar.
+<img width="1439" alt="Screen Shot 2023-04-27 at 1 27 15 PM" src="https://user-images.githubusercontent.com/109253075/234942080-01a1d725-da22-43e0-ba2f-ff54df52c65d.png">
 
     To edit or delete a recipe, click on the "View" button.
-    Once ready, click on the "Submit" or "Delete" button to update your changes.
-img
+<img width="1439" alt="Screen Shot 2023-04-27 at 1 27 26 PM" src="https://user-images.githubusercontent.com/109253075/234942140-6d888154-5fa0-439b-adc2-e5fbc762d6ec.png">
+ Once ready, click on the "Submit" or "Delete" button to update your changes.
+
 
 ## Key details:
     UI source: 
