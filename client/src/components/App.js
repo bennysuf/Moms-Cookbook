@@ -11,7 +11,7 @@ export const UserContext = createContext(null);
 
 function App() {
   const [user, setUser] = useState(null);
-  const [recipe, setRecipe] = useState([]);
+  const [recipes, setRecipes] = useState([]);
   const [view, setView] = useState("");
 
   const history = useHistory();
@@ -20,8 +20,9 @@ function App() {
     fetch("/user").then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          setUser(user);
-          setRecipe(user.recipes);
+        setUser(user);
+        fetch("/recipe_categories").then((r) => r.json().then((d) => setRecipes(d)))
+          // setRecipe(user.recipes);
         });
       } else {
         history.push("/login");
@@ -29,9 +30,11 @@ function App() {
     });
   }, []);
 
+  // console.log("App", recipe)
+
   return (
     <UserContext.Provider
-      value={{ user, setUser, recipe, setRecipe, view, setView }}
+      value={{ user, setUser, recipes, setRecipes, view, setView }}
     >
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
@@ -50,8 +53,9 @@ function App() {
 }
 
 export default App;
-//! export error is from react-script old version
 
 // TODO: validate category (custom validation)
 
-// TODO categories rendering
+// TODO: add array to category then map in backend to create new category
+
+// TODO: redo state for recipes?
