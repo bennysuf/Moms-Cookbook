@@ -3,16 +3,15 @@ import { useContext } from "react";
 import { UserContext } from "./App";
 
 export default function Logout() {
-  const { setUser, setRecipe } = useContext(UserContext);
+  const { setUser, setRecipes } = useContext(UserContext);
 
   const history = useHistory();
 
   function onLogout() {
-    console.log("Logged out");
     fetch("/logout", {
       method: "DELETE",
     }).then(() => {
-      setRecipe([]);
+      setRecipes([]);
       setUser(null);
       history.push("/login");
     });
