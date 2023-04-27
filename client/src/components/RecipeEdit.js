@@ -7,19 +7,23 @@ export default function RecipeEdit() {
 
   const history = useHistory();
 
-  const { recipe, setRecipe, setView } = useContext(UserContext);
+  const { recipes, setRecipes, setView } = useContext(UserContext);
 
-  const recipes = recipe.filter((rec) => rec.id === parseInt(recipeId));
-  const { title, directions, ingredients, categories } = recipes[0];
+  const filtered = recipes.filter((rec) => rec.id === parseInt(recipeId));
+  const { difficulty, category, recipe } = filtered[0];
+  const { title, directions, ingredients } = recipe;
+  const { meal } = category;
+  // const { title, directions, ingredients, categories } = recipe[0];
 
   //useStates
   const [newTitle, setNewTitle] = useState(title);
   const [newDirections, setNewDirections] = useState(directions);
   const [newIngredients, setNewIngredients] = useState(ingredients);
-  const [newCategory, setNewCategory] = useState(categories);
+  const [newDifficulty, setNewDifficulty] = useState(difficulty);
+  const [newCategory, setNewCategory] = useState(meal);
   const [errors, setErrors] = useState([]);
 
-  const meals = newCategory[0]?.meal;
+  // const meals = newCategory[0]?.meal;
 
   function handleSub(e) {
     e.preventDefault();
@@ -30,19 +34,20 @@ export default function RecipeEdit() {
       directions: newDirections,
       ingredients: newIngredients,
       category: newCategory,
+      difficulty: newDifficulty
     };
 
-    fetch(`/recipes/${recipeId}`, {
+    fetch(`/recipe_categories/${recipeId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newItem),
     }).then((r) => {
       if (r.ok) {
         r.json().then((item) => {
-          const returns = recipe.map((rec) => {
+          const returns = recipes.map((rec) => {
             return rec.id !== item.id ? rec : item;
           });
-          setRecipe(returns);
+          setRecipes(returns);
           setView(item);
           history.push("/recipes");
         });
@@ -59,12 +64,12 @@ export default function RecipeEdit() {
   }
 
   function onDelete() {
-    fetch(`/recipes/${recipeId}`, {
+    fetch(`/recipe_categories/${recipeId}`, {
       method: "DELETE",
     })
       .then((r) => r.json())
       .then(() => {
-        setRecipe(recipe.filter((rec) => rec.id !== parseInt(recipeId)));
+        setRecipes(recipes.filter((rec) => rec.id !== parseInt(recipeId)));
         history.push("/home");
       })
       .catch((err) => console.log("Error", err));
@@ -73,6 +78,37 @@ export default function RecipeEdit() {
   return (
     <div>
       <form onSubmit={handleSub}>
+        <div
+          style={{ textAlign: "center" }}
+          onChange={(e) => setNewDifficulty(e.target.value)}
+        >
+          <p>Difficulty</p>
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="difficulty"
+            value="Easy"
+            checked={newDifficulty === "Easy" ? "checked" : null}
+          />
+          Easy
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="difficulty"
+            value="Medium"
+            checked={newDifficulty === "Medium" ? "checked" : null}
+          />
+          Medium
+          <input
+            style={{ marginLeft: "10px" }}
+            type="radio"
+            name="difficulty"
+            value="Hard"
+            checked={newDifficulty === "Hard" ? "checked" : null}
+          />
+          Hard
+        </div>
+        <br />
         <div className="input">
           <input
             type="text"
@@ -106,7 +142,7 @@ export default function RecipeEdit() {
             type="radio"
             name="meal"
             value="Breakfast"
-            checked={meals === "Breakfast" ? "checked" : null}
+            checked={newCategory === "Breakfast" ? "checked" : null}
           />
           Breakfast
           <input
@@ -114,7 +150,7 @@ export default function RecipeEdit() {
             type="radio"
             name="meal"
             value="Lunch"
-            checked={meals === "Lunch" ? "checked" : null}
+            checked={newCategory === "Lunch" ? "checked" : null}
           />
           Lunch
           <input
@@ -122,7 +158,7 @@ export default function RecipeEdit() {
             type="radio"
             name="meal"
             value="Dinner"
-            checked={meals === "Dinner" ? "checked" : null}
+            checked={newCategory === "Dinner" ? "checked" : null}
           />
           Dinner
           <br />
