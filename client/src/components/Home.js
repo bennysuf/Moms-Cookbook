@@ -4,9 +4,9 @@ import NavBar from "./NavBar";
 import { UserContext } from "./App";
 
 export default function Home() {
-  const [recipes, setRecipes] = useState([]);
+  const [recipe, setRecipe] = useState([]);
 
-  const { recipe, setView } = useContext(UserContext);
+  const { recipes, setView } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -15,13 +15,13 @@ export default function Home() {
     history.push("/recipes");
   }
 
-  const mapped = recipe.map((rec) => {
-    const { id, title, categories } = rec;
+  const mapped = recipes.map((rec) => {
+    const { id, title } = rec.recipe;
+    const { meal } = rec.category;
     return (
       <article key={id}>
         <p>{title}</p>
-        {/* <p>{categories[0].meal}</p> //? why does categories only show after reload? */}
-        {/* <p>{categories ? categories[0]?.meal : "Loading..."}</p> //TODO: need page to reload / renders categories once and gets loading */}
+        <p>{meal}</p>
         <button className="button" onClick={() => handleClick(rec)}>
           View
         </button>
@@ -30,14 +30,14 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setRecipes(mapped[0] ? mapped : "Such emptiness");
-  }, [recipe]);
+    setRecipe(mapped[0] ? mapped : "Such emptiness");
+  }, [recipes]);
 
   return (
     <>
       <div style={{ textAlign: "center" }}>
         <NavBar />
-        <ul>{recipes}</ul>
+        <ul>{recipe}</ul>
       </div>
     </>
   );
