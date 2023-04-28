@@ -7,19 +7,15 @@ export default function RecipeEdit() {
 
   const history = useHistory();
 
-  const { recipes, setRecipes, setView } = useContext(UserContext);
+  const { recipes, setRecipes, setView, categories } = useContext(UserContext);
 
   const filtered = recipes.filter((rec) => rec.id === parseInt(recipeId));
-  const { difficulty, category, recipe } = filtered[0];
-  const { title, directions, ingredients } = recipe;
-  const { meal } = category;
+  const { title, directions, ingredients, category } = filtered[0];
 
-  //useStates
   const [newTitle, setNewTitle] = useState(title);
   const [newDirections, setNewDirections] = useState(directions);
   const [newIngredients, setNewIngredients] = useState(ingredients);
-  const [newDifficulty, setNewDifficulty] = useState(difficulty);
-  const [newCategory, setNewCategory] = useState(meal);
+  const [newCategory, setNewCategory] = useState(category.category);
   const [errors, setErrors] = useState([]);
 
   function handleSub(e) {
@@ -31,10 +27,9 @@ export default function RecipeEdit() {
       directions: newDirections,
       ingredients: newIngredients,
       category: newCategory,
-      difficulty: newDifficulty,
     };
 
-    fetch(`/recipe_categories/${recipeId}`, {
+    fetch(`/recipes/${recipeId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newItem),
@@ -46,13 +41,17 @@ export default function RecipeEdit() {
           });
           setRecipes(returns);
           setView(item);
-          history.push("/recipes");
+          history.push("/home");
         });
       } else {
         r.json().then((err) => {
           const arr = [];
-          for (const key in err.errors) {
-            arr.push(`${key}: ${err.errors[key]}`);
+          if (err.error) {
+            arr.push(`${err.error}`);
+          } else {
+            for (const key in err.errors) {
+              arr.push(`${key}: ${err.errors[key]}`);
+            }
           }
           setErrors(arr);
         });
@@ -61,7 +60,7 @@ export default function RecipeEdit() {
   }
 
   function onDelete() {
-    fetch(`/recipe_categories/${recipeId}`, {
+    fetch(`/recipes/${recipeId}`, {
       method: "DELETE",
     })
       .then((r) => r.json())
@@ -75,36 +74,6 @@ export default function RecipeEdit() {
   return (
     <div>
       <form onSubmit={handleSub}>
-        <div
-          style={{ textAlign: "center" }}
-          onChange={(e) => setNewDifficulty(e.target.value)}
-        >
-          <p>Difficulty</p>
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="difficulty"
-            value="Easy"
-            checked={newDifficulty === "Easy" ? "checked" : null}
-          />
-          Easy
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="difficulty"
-            value="Medium"
-            checked={newDifficulty === "Medium" ? "checked" : null}
-          />
-          Medium
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="difficulty"
-            value="Hard"
-            checked={newDifficulty === "Hard" ? "checked" : null}
-          />
-          Hard
-        </div>
         <br />
         <div className="input">
           <input
@@ -128,37 +97,18 @@ export default function RecipeEdit() {
             onChange={(e) => setNewIngredients(e.target.value)}
           />
           <br />
-        </div>
-        <div
-          style={{ textAlign: "center" }}
-          onChange={(e) => setNewCategory(e.target.value)}
-        >
-          <p>Meal type</p>
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="meal"
-            value="Breakfast"
-            checked={newCategory === "Breakfast" ? "checked" : null}
-          />
-          Breakfast
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="meal"
-            value="Lunch"
-            checked={newCategory === "Lunch" ? "checked" : null}
-          />
-          Lunch
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="meal"
-            value="Dinner"
-            checked={newCategory === "Dinner" ? "checked" : null}
-          />
-          Dinner
-          <br />
+          <details role="list">
+            <summary role="button" aria-haspopup="listbox">
+              {newCategory}
+            </summary>
+            <ul role="listbox">
+              {categories.map((cat) => (
+                <li key={cat.id} onClick={() => setNewCategory(cat.category)}>
+                  {cat.category}
+                </li>
+              ))}
+            </ul>
+          </details>
         </div>
         <br />
         <button className="button" type="submit">

@@ -1,43 +1,57 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import { UserContext } from "./App";
 
 export default function Home() {
   const [recipe, setRecipe] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState("Category Dropdown");
 
-  const { recipes, setView } = useContext(UserContext);
+  const { recipes, categories } = useContext(UserContext);
 
-  const history = useHistory();
-
-  function handleClick(event) {
-    setView(event);
-    history.push("/recipes");
+  function handleSub(e) {
+    e.preventDefault();
+    setRecipe(recipes.filter((r) => r.category.category === currentCategory));
   }
-
-  const mapped = recipes.map((rec) => {
-    const { id, title } = rec.recipe;
-    const { meal } = rec.category;
-    return (
-      <article key={id}>
-        <p>{title}</p>
-        <p>{meal}</p>
-        <button className="button" onClick={() => handleClick(rec)}>
-          View
-        </button>
-      </article>
-    );
-  });
-
-  useEffect(() => {
-    setRecipe(mapped[0] ? mapped : "Such emptiness");
-  }, [recipes]);
 
   return (
     <>
       <div style={{ textAlign: "center" }}>
         <NavBar />
-        <ul>{recipe}</ul>
+        <form className="input" onSubmit={handleSub}>
+          <details role="list">
+            <summary role="button" aria-haspopup="listbox">
+              {currentCategory}
+            </summary>
+            <ul role="listbox">
+              {categories.map((cat) => (
+                <li
+                  key={cat.id}
+                  onClick={() => setCurrentCategory(cat.category)}
+                >
+                  {cat.category}
+                </li>
+              ))}
+            </ul>
+          </details>
+          <button type="submit">Search</button>
+        </form>
+        {recipe[0] === undefined ? (
+          <h1>No recipes</h1>
+        ) : (
+          recipe.map((rec) => {
+            const { id, title, directions, ingredients } = rec;
+            return (
+              <div key={id}>
+                <h2>Title: {title}</h2>
+                <p>Directions: {directions}</p>
+                <em>Ingredients: {ingredients}</em>
+                <br />
+                <Link to={`/recipes/${id}`}>Edit</Link>
+              </div>
+            );
+          })
+        )}
       </div>
     </>
   );

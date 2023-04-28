@@ -16,6 +16,9 @@ export default function NavBar() {
           <a href="/add-new">New recipe</a>
         </li>
         <li>
+          <a href="/add-category">Add Category</a>
+        </li>
+        <li>
           <Logout />
         </li>
       </ul>

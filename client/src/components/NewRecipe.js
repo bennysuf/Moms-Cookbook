@@ -7,25 +7,22 @@ export default function NewRecipe() {
   const [newTitle, setNewTitle] = useState("");
   const [newDirections, setNewDirections] = useState("");
   const [newIngredients, setNewIngredients] = useState("");
-  const [newCategory, setNewCategory] = useState("");
-  const [newDifficulty, setNewDifficulty] = useState("");
+  const [newCategory, setNewCategory] = useState("Select Category");
   const [errors, setErrors] = useState([]);
 
   const history = useHistory();
 
-  const { recipes, setRecipes } = useContext(UserContext);
+  const { recipes, setRecipes, categories } = useContext(UserContext);
 
   function handleAdd(e) {
     e.preventDefault();
-
     const update = {
       title: newTitle,
       directions: newDirections,
       ingredients: newIngredients,
       category: newCategory,
-      difficulty: newDifficulty
     };
-    fetch("/recipe_categories", {
+    fetch("/recipes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(update),
@@ -37,9 +34,14 @@ export default function NewRecipe() {
         });
       } else {
         r.json().then((err) => {
+          console.log("err", err);
           const arr = [];
-          for (const key in err.errors) {
-            arr.push(`${key}: ${err.errors[key]}`);
+          if (err.error) {
+            arr.push(`${err.error}`);
+          } else {
+            for (const key in err.errors) {
+              arr.push(`${key}: ${err.errors[key]}`);
+            }
           }
           setErrors(arr);
         });
@@ -51,37 +53,6 @@ export default function NewRecipe() {
     <div>
       <NavBar />
       <form onSubmit={handleAdd}>
-        <div
-          style={{ textAlign: "center" }}
-          onChange={(e) => setNewDifficulty(e.target.value)}
-        >
-          <p>Difficulty</p>
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="difficulty"
-            value="Easy"
-            checked={newDifficulty === "Easy" ? "checked" : null}
-          />
-          Easy
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="difficulty"
-            value="Medium"
-            checked={newDifficulty === "Medium" ? "checked" : null}
-          />
-          Medium
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="difficulty"
-            value="Hard"
-            checked={newDifficulty === "Hard" ? "checked" : null}
-          />
-          Hard
-        </div>
-        <br />
         <div className="input">
           <input
             type="text"
@@ -105,33 +76,18 @@ export default function NewRecipe() {
           />
           <br />
         </div>
-        <div
-          style={{ textAlign: "center" }}
-          onChange={(e) => setNewCategory(e.target.value)}
-        >
-          <p>Meal type</p>
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="meal"
-            value="Breakfast"
-          />
-          Breakfast
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="meal"
-            value="Lunch"
-          />
-          Lunch
-          <input
-            style={{ marginLeft: "10px" }}
-            type="radio"
-            name="meal"
-            value="Dinner"
-          />
-          Dinner
-        </div>
+        <details className="input" role="list">
+          <summary role="button" aria-haspopup="listbox">
+            {newCategory}
+          </summary>
+          <ul role="listbox">
+            {categories.map((cat) => (
+              <li key={cat.id} onClick={() => setNewCategory(cat.category)}>
+                {cat.category}
+              </li>
+            ))}
+          </ul>
+        </details>
         <br />
         <button className="button" type="submit">
           Add recipe

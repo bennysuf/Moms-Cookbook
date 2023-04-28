@@ -7,7 +7,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
 
-  const { user, setUser, setRecipes } = useContext(UserContext);
+  const { user, setUser, setCategories, setRecipes } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -35,9 +35,10 @@ export default function Login() {
       if (r.ok) {
         r.json().then((user) => {
           setUser(user);
-          fetch("/recipe_categories").then((r) =>
-            r.json().then((d) => setRecipes(d))
-          );
+          fetch("categories")
+            .then((r) => r.json())
+            .then((d) => setCategories(d));
+          setRecipes(user.recipes);
           history.push("/home");
         });
       } else {
