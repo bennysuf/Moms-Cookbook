@@ -1,6 +1,6 @@
 class Category < ApplicationRecord
-    has_many :recipe_categories, dependent: :destroy
-    has_many :recipes, through: :recipe_categories
+    has_many :recipes
+    has_many :users, through: :recipes
 
-    validates :meal, presence: true
+    validates :category, presence: true
 end
