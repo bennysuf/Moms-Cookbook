@@ -38,20 +38,22 @@
 ## How to use it:
     If you already have an account then login using your login information, 
     if not then click on "Signup" to create an account. 
-    Once you are signed in you will be taken to the Home page,
-    which houses all your recipes.
+    Once you are signed in you will be taken to the Home page.
 
-    To go to home, click the 'Home' button.
-<img width="1439" alt="Screen Shot 2023-04-27 at 1 26 56 PM" src="https://user-images.githubusercontent.com/109253075/234941997-dd46ad3a-8409-49b4-b708-8494f5efdaa0.png">
-
-    To create a recipe yourself, click the 'New recipe' button. 
+    If you have recipes already, click the Category dropdown
+    and select which category of recipes you want to see.
+    If you have no recipes then the dropdown will be empty.
+img
+    
+    To create a recipe yourself, click the 'New Recipe' button. 
+    To create a category yourself, click the 'Add Category' button. 
 
     All on the top left side on the app bar.
 
-    Click on the "View" button to see the full recipe.
-<img width="1439" alt="Screen Shot 2023-04-27 at 1 27 15 PM" src="https://user-images.githubusercontent.com/109253075/234942080-01a1d725-da22-43e0-ba2f-ff54df52c65d.png">    
+    Select a category to see your recipes in that category.
+img
     To edit or delete a recipe, click on the "Edit" button.
-<img width="1439" alt="Screen Shot 2023-04-27 at 1 27 26 PM" src="https://user-images.githubusercontent.com/109253075/234942140-6d888154-5fa0-439b-adc2-e5fbc762d6ec.png">
+img
  Once ready, click on the "Submit" or "Delete" button to update your changes.
 
 
