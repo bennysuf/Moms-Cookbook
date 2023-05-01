@@ -7,7 +7,7 @@ export default function Home() {
   const [recipe, setRecipe] = useState([]);
   const [currentCategory, setCurrentCategory] = useState("Category Dropdown");
 
-  const { recipes, categories } = useContext(UserContext);
+  const { recipes, userCategories } = useContext(UserContext);
 
   function handleSub(e) {
     e.preventDefault();
@@ -24,12 +24,12 @@ export default function Home() {
               {currentCategory}
             </summary>
             <ul role="listbox">
-              {categories.map((cat) => (
+              {userCategories.map((cat) => (
                 <li
-                  key={cat.id}
-                  onClick={() => setCurrentCategory(cat.category)}
+                  key={cat}
+                  onClick={() => setCurrentCategory(cat)}
                 >
-                  {cat.category}
+                  {cat}
                 </li>
               ))}
             </ul>
