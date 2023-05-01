@@ -7,11 +7,12 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
 
-  const { user, setUser, setCategories, setRecipes } = useContext(UserContext);
+  const { user, setUser, setCategories, setRecipes, uniqueCategories } =
+    useContext(UserContext);
 
   const history = useHistory();
 
-  if (user) history.push("/home");
+  if (user) history.push("/home"); // if someone is logged in
 
   function handleUsername(e) {
     e.preventDefault();
@@ -38,6 +39,9 @@ export default function Login() {
           fetch("categories")
             .then((r) => r.json())
             .then((d) => setCategories(d));
+          if (user.categories[0] !== undefined) {
+            uniqueCategories(user.categories);
+          }
           setRecipes(user.recipes);
           history.push("/home");
         });
