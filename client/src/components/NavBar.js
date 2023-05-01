@@ -13,7 +13,7 @@ export default function NavBar() {
           <a href="/home">Home</a>
         </li>
         <li>
-          <a href="/add-new">New recipe</a>
+          <a href="/add-new">New Recipe</a>
         </li>
         <li>
           <a href="/add-category">Add Category</a>
