@@ -7,7 +7,14 @@ export default function RecipeEdit() {
 
   const history = useHistory();
 
-  const { recipes, setRecipes, setView, categories } = useContext(UserContext);
+  const {
+    recipes,
+    setRecipes,
+    setView,
+    categories,
+    userCategories,
+    setUserCategories,
+  } = useContext(UserContext);
 
   const filtered = recipes.filter((rec) => rec.id === parseInt(recipeId));
   const { title, directions, ingredients, category } = filtered[0];
@@ -59,13 +66,29 @@ export default function RecipeEdit() {
     });
   }
 
-  function onDelete() {
+  function onDelete(item) {
     fetch(`/recipes/${recipeId}`, {
       method: "DELETE",
     })
       .then((r) => r.json())
       .then(() => {
-        setRecipes(recipes.filter((rec) => rec.id !== parseInt(recipeId)));
+        const deleted = recipes.filter((rec) => rec.id !== parseInt(recipeId));
+
+        if (
+          deleted.filter(
+            (rec) => rec.category.category === item.category.category
+          ).length === 0
+        ) {
+          // if deleted recipe is the only recipe in a category removes that category
+          setUserCategories(
+            userCategories.filter((cat) => cat !== item.category.category)
+          );
+        }
+        if (recipes.length === 1) {
+          // if deleted recipe is the last recipe
+          setUserCategories(["No recipes"]);
+        }
+        setRecipes(deleted);
         history.push("/home");
       })
       .catch((err) => console.log("Error", err));
@@ -116,7 +139,11 @@ export default function RecipeEdit() {
         </button>
         <br />
       </form>
-      <button className="button" type="button" onClick={onDelete}>
+      <button
+        className="button"
+        type="button"
+        onClick={() => onDelete(filtered[0])}
+      >
         Delete recipe
       </button>
       <div className="input">
