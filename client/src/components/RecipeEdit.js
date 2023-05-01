@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "./App";
+import NavBar from "./NavBar";
 
 export default function RecipeEdit() {
   const { recipeId } = useParams();
@@ -96,6 +97,7 @@ export default function RecipeEdit() {
 
   return (
     <div>
+      <NavBar/>
       <form onSubmit={handleSub}>
         <br />
         <div className="input">
