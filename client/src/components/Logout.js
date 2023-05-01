@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { UserContext } from "./App";
 
 export default function Logout() {
-  const { setUser, setRecipes } = useContext(UserContext);
+  const { setUser, setRecipes, setUserCategories } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -13,6 +13,7 @@ export default function Logout() {
     }).then(() => {
       setRecipes([]);
       setUser(null);
+      setUserCategories(["No recipes"]);
       history.push("/login");
     });
   }
