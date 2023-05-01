@@ -12,7 +12,8 @@ export default function NewRecipe() {
 
   const history = useHistory();
 
-  const { recipes, setRecipes, categories } = useContext(UserContext);
+  const { recipes, setRecipes, categories, setUserCategories, userCategories } =
+    useContext(UserContext);
 
   function handleAdd(e) {
     e.preventDefault();
@@ -29,12 +30,18 @@ export default function NewRecipe() {
     }).then((r) => {
       if (r.ok) {
         r.json().then((newItem) => {
+          if (userCategories[0] === "No recipes") {
+            // if theres no category
+            setUserCategories([newCategory]);
+          } else if (userCategories.filter((cat) => cat !== newCategory)[0]) {
+            // checks if category already exists
+            setUserCategories([...userCategories, newCategory]);
+          }
           setRecipes([...recipes, newItem]);
           history.push("/home");
         });
       } else {
         r.json().then((err) => {
-          console.log("err", err);
           const arr = [];
           if (err.error) {
             arr.push(`${err.error}`);
