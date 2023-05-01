@@ -14,9 +14,19 @@ function App() {
   const [user, setUser] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [userCategories, setUserCategories] = useState(["No recipes"]);
   const [view, setView] = useState("");
 
   const history = useHistory();
+
+  function uniqueCategories(arr) {
+    let chars = [];
+    arr.forEach((e) => chars.push(e.category));
+    let uniqueChars = chars.filter((c, index) => {
+      return chars.indexOf(c) === index;
+    });
+    setUserCategories(uniqueChars);
+  }
 
   useEffect(() => {
     fetch("/user").then((r) => {
@@ -26,6 +36,9 @@ function App() {
           fetch("categories")
             .then((r) => r.json())
             .then((d) => setCategories(d));
+          if (user.categories[0] !== undefined) {
+            uniqueCategories(user.categories);
+          }
           setRecipes(user.recipes);
         });
       } else {
@@ -57,6 +70,9 @@ function App() {
         setView,
         categories,
         setCategories,
+        userCategories,
+        setUserCategories,
+        uniqueCategories,
       }}
     >
       <Route path="/login" component={Login} />
@@ -69,5 +85,3 @@ function App() {
 }
 
 export default App;
-
-// TODO: redo state for recipes?
