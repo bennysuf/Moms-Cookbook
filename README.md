@@ -7,6 +7,7 @@
 
 ## How to start it up:
 **To start up backend**
+
     Clone the repository and open it in your terminal. 
     Run:
 `$ bundle install` or `$ bundle i`
