@@ -33,7 +33,7 @@
     This will start up the Frontend server.
     You will then be taken to the browser to start using the application.
 
-    To quit the server, cd into client then press CTRL + C.
+    To quit the server, in the same terminal press CTRL + C.
 
 ## How to use it:
     If you already have an account then login using your login information, 
@@ -45,16 +45,13 @@
     If you have no recipes then the dropdown will be empty.
 img
     
-    To create a recipe yourself, click the 'New Recipe' button. 
-    To create a category yourself, click the 'Add Category' button. 
-
+    To create a recipe for yourself, click the 'New Recipe' button. 
+    To create a category, click the 'Add Category' button. 
     All on the top left side on the app bar.
 
-    Select a category to see your recipes in that category.
-img
     To edit or delete a recipe, click on the "Edit" button.
 img
- Once ready, click on the "Submit" or "Delete" button to update your changes.
+ Once ready, click "Submit" to update your changes or delete the recipe.
 
 
 ## Key details:
