@@ -15,6 +15,7 @@ export default function RecipeEdit() {
     categories,
     userCategories,
     setUserCategories,
+    uniqueCategories,
   } = useContext(UserContext);
 
   const filtered = recipes.filter((rec) => rec.id === parseInt(recipeId));
@@ -48,6 +49,21 @@ export default function RecipeEdit() {
             return rec.id !== item.id ? rec : item;
           });
           setRecipes(returns);
+          if (newCategory !== category.category) {
+            // checks if category was changed
+            const categoryCheck = recipes.filter(
+              (rec) => rec.category.category === category.category
+            );
+            if (categoryCheck.length === 1) {
+              // checks if recipe is last in category
+              uniqueCategories([
+                ...userCategories.filter((cat) => cat !== category.category),
+                newCategory,
+              ]);
+            } else {
+              setUserCategories([...userCategories, newCategory]);
+            }
+          }
           setView(item);
           history.push("/home");
         });
@@ -74,7 +90,6 @@ export default function RecipeEdit() {
       .then((r) => r.json())
       .then(() => {
         const deleted = recipes.filter((rec) => rec.id !== parseInt(recipeId));
-
         if (
           deleted.filter(
             (rec) => rec.category.category === item.category.category
@@ -97,7 +112,7 @@ export default function RecipeEdit() {
 
   return (
     <div>
-      <NavBar/>
+      <NavBar />
       <form onSubmit={handleSub}>
         <br />
         <div className="input">
