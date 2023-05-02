@@ -6,6 +6,7 @@
     Introducing "Mom's Cookbook", an app that allows you to document your recipes.
 
 ## How to start it up:
+**To start up backend**
     Clone the repository and open it in your terminal. 
     Run:
 `$ bundle install` or `$ bundle i`
@@ -19,6 +20,7 @@
    This will start up the Backend server.
 
    To quit the server, press CTRL + C.
+
 
 **To start up frontend**
 
@@ -49,6 +51,7 @@ img
 
     To edit or delete a recipe, click on the "Edit" button.
 img
+
     Once ready, click "Submit" to update your changes or delete the recipe.
 
 
