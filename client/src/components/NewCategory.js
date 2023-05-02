@@ -29,8 +29,6 @@ export default function NewCategory() {
     });
   }
 
-  console.log("err", errors);
-
   return (
     <div>
       <NavBar />
