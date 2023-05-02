@@ -13,9 +13,8 @@
     Once your dependencies are installed, run:
 `$ rails db:migrate`
 
-    Then in a new terminal, run:
+    Then run:
 `$ rails server` or `$ rails s`
-
 
    This will start up the Backend server.
 
@@ -26,9 +25,8 @@
     In a new terminal run: 
 `$ npm install --prefix client`
 
-    Then: 
+    Then run: 
 `$ npm start --prefix client`
-
 
     This will start up the Frontend server.
     You will then be taken to the browser to start using the application.
@@ -51,7 +49,7 @@ img
 
     To edit or delete a recipe, click on the "Edit" button.
 img
- Once ready, click "Submit" to update your changes or delete the recipe.
+    Once ready, click "Submit" to update your changes or delete the recipe.
 
 
 ## Key details:
