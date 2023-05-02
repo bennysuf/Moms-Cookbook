@@ -23,6 +23,12 @@ code {
   width: 25%;
 }
 
+.card{
+  text-align: center;
+  margin: auto;
+  width: 40%;
+}
+
 .radio {
   text-align: center;
   margin-left: 10px;
