@@ -3,12 +3,12 @@ import Logout from "./Logout";
 export default function NavBar() {
   return (
     <nav>
-      <ul style={{ marginLeft: "5%" }}>
+      <ul style={{ marginLeft: "3%" }}>
         <li>
           <strong>Mom's Cookbook</strong>
         </li>
       </ul>
-      <ul>
+      <ul style={{marginRight: "3%"}}>
         <li>
           <a href="/home">Home</a>
         </li>
