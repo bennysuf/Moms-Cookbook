@@ -42,13 +42,16 @@ export default function Home() {
           recipe.map((rec) => {
             const { id, title, directions, ingredients } = rec;
             return (
-              <div key={id}>
+              <>
+              <article className="card" key={id}>
                 <h2>Title: {title}</h2>
                 <p>Directions: {directions}</p>
                 <em>Ingredients: {ingredients}</em>
                 <br />
                 <Link to={`/recipes/${id}`}>Edit</Link>
-              </div>
+              </article>
+                <br/>
+              </>
             );
           })
         )}
