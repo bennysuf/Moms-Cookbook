@@ -46,15 +46,13 @@
     If you have no recipes then the dropdown will be empty.
 <img width="1439" alt="Screen Shot 2023-05-02 at 2 26 04 PM" src="https://user-images.githubusercontent.com/109253075/235753665-184ec4e7-e47d-49c4-839c-82d27862b547.png">
 
-<img width="1439" alt="Screen Shot 2023-05-02 at 2 26 18 PM" src="https://user-images.githubusercontent.com/109253075/235753709-c5e4a3f6-46f7-44d6-acd4-7305a74b5f0b.png">
-    
     To create a recipe for yourself, click the 'New Recipe' button. 
     To create a category, click the 'Add Category' button. 
     All on the top left side on the app bar.
 
     To edit or delete a recipe, click on the "Edit" button.
-<img width="1439" alt="Screen Shot 2023-05-02 at 2 30 01 PM" src="https://user-images.githubusercontent.com/109253075/235754268-1e25c747-b3be-49e3-a4f7-d8220fc7ffc8.png">
-  
+<img width="1439" alt="Screen Shot 2023-05-02 at 2 26 18 PM" src="https://user-images.githubusercontent.com/109253075/235753709-c5e4a3f6-46f7-44d6-acd4-7305a74b5f0b.png">
+
     Once ready, click "Submit" to update your changes or delete the recipe.
 <img width="1439" alt="Screen Shot 2023-05-02 at 2 26 41 PM" src="https://user-images.githubusercontent.com/109253075/235753768-adeea73e-3817-4156-bc97-39352840cc59.png">
 
