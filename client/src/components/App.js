@@ -21,7 +21,11 @@ function App() {
 
   function uniqueCategories(arr) {
     let chars = [];
-    arr.forEach((e) => chars.push(e.category));
+    if (arr[0].category) {
+      arr.forEach((e) => chars.push(e.category));
+    } else {
+      arr.forEach((e) => chars.push(e));
+    }
     let uniqueChars = chars.filter((c, index) => {
       return chars.indexOf(c) === index;
     });
@@ -47,18 +51,6 @@ function App() {
     });
   }, []);
 
-  const routes = (
-    <Switch>
-      <Route path="/home" component={Home} />
-      <Route exact path={`/recipes/:recipeId`} component={RecipeEdit} />
-      <Route path="/add-new" component={NewRecipe} />
-      <Route path="/add-category" component={newCategory} />
-      <Route exact path="*">
-        <h1 style={{ textAlign: "center" }}>404 Page Not Found</h1>
-      </Route>
-    </Switch>
-  );
-
   return (
     <UserContext.Provider
       value={{
@@ -78,7 +70,21 @@ function App() {
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       {/* not in ternary so if signed in, cant access login */}
-      {!user ? <> </> : <>{routes}</>}
+      {!user ? (
+        <> </>
+      ) : (
+        <>
+          <Switch>
+            <Route path="/home" component={Home} />
+            <Route exact path={`/recipes/:recipeId`} component={RecipeEdit} />
+            <Route path="/add-new" component={NewRecipe} />
+            <Route path="/add-category" component={newCategory} />
+            <Route exact path="*">
+              <h1 style={{ textAlign: "center" }}>404 Page Not Found</h1>
+            </Route>
+          </Switch>
+        </>
+      )}
       {/* ternary so routes cant even load briefly if not logged in */}
     </UserContext.Provider>
   );
